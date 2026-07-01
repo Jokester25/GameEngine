@@ -35,6 +35,7 @@ int main()
                 quit = true;
             }
         }
+        //makes a screen with a flash bang
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set render draw color to black
         SDL_RenderClear(renderer); // Clear the renderer
