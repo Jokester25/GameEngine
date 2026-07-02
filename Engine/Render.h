@@ -17,6 +17,9 @@ namespace nu
 		void DrawPoint(float x, float y);
 		void DrawFillRect(float x, float y, float w, float h);
 		void DrawRect(float x, float y, float w, float h);
+
+		void DrawLine(float x1, float y1, float x2, float y2);
+		
 	private:
 		//m_(insert name) is a naming convention for member variables
 		SDL_Window* m_window = nullptr;

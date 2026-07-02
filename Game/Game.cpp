@@ -20,7 +20,7 @@ int main()
                 quit = true;
             }
         }
-        //makes a screen with a flash bang
+
 		renderer.SetColor(0, 0, 0, 255); // Set render draw color to black
         renderer.Clear();
 
@@ -32,7 +32,6 @@ int main()
 		renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
         renderer.DrawFillRect(40, 40, 50, 50);
 
-        //SDL_RenderPresent(renderer); // Render the screen
 		renderer.Present();
     }
     renderer.Shutdown();
