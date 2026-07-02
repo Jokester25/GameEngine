@@ -1,4 +1,4 @@
-#include "../Engine/Engine.h";
+#include "Engine.h";
 #include "SDL3/SDL.h"
 
 #include <iostream>
@@ -6,28 +6,13 @@
 
 int main()
 {
-    SDL_Init(SDL_INIT_VIDEO);
+    nu::Renderer renderer;
+	renderer.Initialize("Game Engine", 1280, 1024);
 
-    SDL_Window* window = SDL_CreateWindow("SDL3 Project", 1280, 1024, 0);
-    if (window == nullptr) {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
-    if (renderer == nullptr) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return 1;
-    }
-
+    //handle Events
     SDL_Event e;
     bool quit = false;
 
-    // Define a rectangle
-    SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
     while (!quit) {
         while (SDL_PollEvent(&e)) {
@@ -36,25 +21,21 @@ int main()
             }
         }
         //makes a screen with a flash bang
+		renderer.SetColor(0, 0, 0, 255); // Set render draw color to black
+        renderer.Clear();
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set render draw color to black
-        SDL_RenderClear(renderer); // Clear the renderer
-        
-        SDL_SetRenderDrawColor(renderer, rand() % 256, rand() % 256, rand() % 256, 255);
-        SDL_RenderPoint(renderer, rand() % 1280, rand() % 1024);
+        for(int i = 0; i < 100; i++) {
+            renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
+            renderer.DrawPoint(rand() % 1280, rand() % 1024);
+		}
 
-        SDL_SetRenderDrawColor(renderer, rand() % 256, rand() % 256, rand() % 256, 255); // Set render draw color to green
-        SDL_RenderFillRect(renderer, &greenSquare); // Render the rectangle
+		renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
+        renderer.DrawFillRect(40, 40, 50, 50);
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderDebugText(renderer, 40, 40, "Hello World!");
-
-        SDL_RenderPresent(renderer); // Render the screen
+        //SDL_RenderPresent(renderer); // Render the screen
+		renderer.Present();
     }
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    renderer.Shutdown();
 
     return 0;
 }
