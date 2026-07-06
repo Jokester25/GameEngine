@@ -1,8 +1,11 @@
 #include "Engine.h";
 
 #include <iostream>
+#include <vector>
+
 #include <cstdlib>
 using namespace nu;
+using namespace std;
 
 int main()
 {   
@@ -11,11 +14,12 @@ int main()
 	const int SCREEN_H = 1024;
 	const int SHAPE_COUNT = 20;
 
-	std::cout << sizeof(Vector2) << std::endl;
-    Vector2 v[300];
-    for (int i = 0; i < 30; ++i) {
-		v[i].x = RandomFloat(SCREEN_W);
-        v[i].y = RandomFloat(SCREEN_H);
+	//std::cout << sizeof(Vector2) << std::endl;
+    Vector2 vel(0.5f, 0.5f);
+    std::vector<Vector2> v;
+    
+    for (int i = 0; i < 300; ++i) {
+		v.push_back(Vector2{ RandomFloat(SCREEN_W), RandomFloat(SCREEN_H) });
     }
 
     Renderer renderer;
@@ -40,8 +44,9 @@ int main()
         renderer.Clear();
 
 		// Draw random points
-        for (int i = 0; i < SHAPE_COUNT; ++i) {
+        for (int i = 0; i < v.size(); ++i) {
             renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat(), 255);
+            v[i] = v[i] + vel;
 			renderer.DrawPoint(v[i].x, v[i].y);
         }
 		renderer.Present();
