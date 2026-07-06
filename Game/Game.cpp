@@ -1,74 +1,77 @@
 #include "Engine.h";
-#include "SDL3/SDL.h"
 
 #include <iostream>
 #include <cstdlib>
-
+using namespace nu;
 
 int main()
-{
+{   
+    //INITIALIZATION
     const int SCREEN_W = 1280;
 	const int SCREEN_H = 1024;
 	const int SHAPE_COUNT = 20;
-	const int FRAME_DELAY_MS = 16; // ~60 FPS
 
-    nu::Renderer renderer;
+	std::cout << sizeof(Vector2) << std::endl;
+    Vector2 v[300];
+    for (int i = 0; i < 30; ++i) {
+		v[i].x = RandomFloat(SCREEN_W);
+        v[i].y = RandomFloat(SCREEN_H);
+    }
+
+    Renderer renderer;
 	renderer.Initialize("Game Engine", SCREEN_W, SCREEN_H);
 
-	srand(SDL_GetTicks()); // Seed the random number generator with the current time
+	srand(SDL_GetTicks()); 
 
-    //handle Events
-    SDL_Event e;
+    //Main Loop
     bool quit = false;
-
-
     while (!quit) {
-        Uint32 frameStart = SDL_GetTicks();
+        //Update
+        SDL_Event event;
 
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_EVENT_QUIT) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
         }
 
-		renderer.SetColor(0, 0, 0, 255); // Set render draw color to black
+        //RENDER
+		renderer.SetColor(0.0f, 0.0f, 0.0f); // Set render draw color to black
         renderer.Clear();
 
-        
+		// Draw random points
         for (int i = 0; i < SHAPE_COUNT; ++i) {
-            renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
-			int x = rand() % SCREEN_W;
-			int y = rand() % SCREEN_H;
-			renderer.DrawPoint(x, y);
+            renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat(), 255);
+			renderer.DrawPoint(v[i].x, v[i].y);
         }
 		renderer.Present();
         
+        //Draw random Lines
+        /*
         for (int i = 0; i < SHAPE_COUNT; ++i) {
-            renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
-            int x = rand() % SCREEN_W;
-            int y = rand() % SCREEN_H;
-            int x2 = rand() % SCREEN_W;
-            int y2 = rand() % SCREEN_H;
+            renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat(), 255);
+            int x = RandomFloat(SCREEN_W);//rand() % SCREEN_W;
+            int y = RandomFloat(SCREEN_H);
+            int x2 = RandomFloat(SCREEN_W);
+            int y2 = RandomFloat(SCREEN_H);
             renderer.DrawLine(x, y, x2, y2);
         }
         renderer.Present();
 
+        //Draw random Rectangles
         for (int i = 0; i < SHAPE_COUNT; ++i) {
-            renderer.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
+            renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat(), 255);
             int x = rand() % SCREEN_W;
             int y = rand() % SCREEN_H;
-            int w = rand() % 100 + 10; // Width between 10 and 110
-            int h = rand() % 100 + 10; // Height between 10 and 110
+            int w = RandomFloat(100, 10);
+            int h = rand() % 100 + 10;
             renderer.DrawRect(x, y, w, h);
 		}
-
+        
 		renderer.Present();
-
-        Uint32 frameTime = SDL_GetTicks() - frameStart;
-        if (frameTime < (Uint32)FRAME_DELAY_MS) {
-            SDL_Delay(16 - frameTime); // Delay to cap at ~60 FPS
-		}
+        */
     }
+    //SHUTDOWN
     renderer.Shutdown();
 
     return 0;

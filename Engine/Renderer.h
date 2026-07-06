@@ -11,6 +11,7 @@ namespace nu
 		void Shutdown();
 
 		void SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 alpha = 255);
+		void SetColor(float r, float g, float b, float alpha = 1.0f);
 		void Clear();
 		void Present();
 		

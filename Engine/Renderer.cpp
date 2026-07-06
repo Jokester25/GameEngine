@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Render.h"
+#include "Renderer.h"
 
 #include <iostream>
 
@@ -38,6 +38,11 @@ namespace nu
     {
         SDL_SetRenderDrawColor(m_renderer, r, g, b, alpha);
 	}
+
+    void Renderer::SetColor(float r, float g, float b, float alpha)
+    {
+        SDL_SetRenderDrawColorFloat(m_renderer, r, g, b, alpha);
+    }
 
     void Renderer::Clear()
     {
