@@ -13,6 +13,7 @@ namespace nu
 			Middle = 2,
 			Right = 3 
 		};
+	
 	public:
 		bool Initialize();
 		void Shutdown();
@@ -20,12 +21,18 @@ namespace nu
 		void Update();
 
 		bool GetKeyDown(int key) const {return m_keyStates[key];}
-		bool GetPrevKeyDown(int key) const {return m_prevKeyStates[key] && m_keyStates[key]; }
-		bool GetKeyPressed(int key) const {return !m_prevKeyStates[key] && !m_keyStates[key];}
+		bool GetPrevKeyDown(int key) const { return m_prevKeyStates[key]; }
+		bool GetKeyPressed(int key) const {return !m_prevKeyStates[key] && m_keyStates[key];}
+		bool GetKeyReleased(int key) const { return m_prevKeyStates[key] && !m_keyStates[key]; }
 
-		bool GetMouseDown(MouseButton button) const { return false; }
 
 		Vector2 GetMousePosition() const { return m_mousePosition; }
+
+		bool GetButtonDown(MouseButton button) const { return m_buttonState & GetButtonBit(button); }
+		bool GetPrevButtonDown(MouseButton button) const { return m_prevButtonStates & GetButtonBit(button); }
+		bool GetButtonPressed(MouseButton button) const { return !GetPrevButtonDown(button) && GetButtonDown(button);}
+		bool GetButtonReleased(MouseButton button) const { return GetPrevButtonDown(button) && !GetButtonDown(button);}
+
 
 	private:
 		// Keyborad
@@ -38,6 +45,7 @@ namespace nu
 		
 		Vector2 m_mousePosition{ 0, 0};
 
+		uint32_t GetButtonBit(MouseButton button) const;
 	};
 
 }
