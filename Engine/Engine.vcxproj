@@ -111,6 +111,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\sdl3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -137,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EnginMath.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="FunTime.h" />
     <ClInclude Include="Input.h" />

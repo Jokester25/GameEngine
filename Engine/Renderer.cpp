@@ -35,44 +35,44 @@ namespace nu
         SDL_Quit();
 	}
 
-    void Renderer::SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 alpha)
+    void Renderer::SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 alpha)const
     {
         SDL_SetRenderDrawColor(m_renderer, r, g, b, alpha);
 	}
 
-    void Renderer::SetColor(float r, float g, float b, float alpha)
+    void Renderer::SetColor(float r, float g, float b, float alpha)const
     {
         SDL_SetRenderDrawColorFloat(m_renderer, r, g, b, alpha);
     }
 
-    void Renderer::Clear()
+    void Renderer::Clear() const
     {
         SDL_RenderClear(m_renderer);
 	}
 
-    void Renderer::Present()
+    void Renderer::Present() const
     {
         SDL_RenderPresent(m_renderer);
     }
 
-    void Renderer::DrawPoint(float x, float y)
+    void Renderer::DrawPoint(float x, float y)const
     {
         SDL_RenderPoint(m_renderer, x, y);
 	}
 
-    void Renderer::DrawFillRect(float x, float y, float w, float h)
+    void Renderer::DrawFillRect(float x, float y, float w, float h)const
     {
         SDL_FRect rect = { x, y, w, h };
         SDL_RenderFillRect(m_renderer, &rect);
        
     }
-    void Renderer::DrawRect(float x, float y, float w, float h)
+    void Renderer::DrawRect(float x, float y, float w, float h)const
     {
         SDL_FRect rect = { x, y, w, h };
         SDL_RenderFillRect(m_renderer, &rect);
 	}
 
-    void Renderer::DrawLine(float x1, float y1, float x2, float y2)
+    void Renderer::DrawLine(float x1, float y1, float x2, float y2)const
     {
 		SDL_RenderLine(m_renderer, x1, y1, x2, y2);
     }

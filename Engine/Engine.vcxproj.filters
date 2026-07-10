@@ -39,6 +39,9 @@
     <ClInclude Include="FunTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EnginMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
