@@ -102,7 +102,7 @@ int main()
         }
         //undo points
         if (input.GetButtonPressed(Input::MouseButton::Right)) {
-           if(!points.empty()) points.pop_back();
+           if(points.empty()) points.pop_back();
         }
 
         Vector2 force{ 0.0f, 0.0f };
