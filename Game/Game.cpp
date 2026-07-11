@@ -87,7 +87,7 @@ int main()
         time.Tick();
        
         if (input.GetButtonDown(Input::MouseButton::Left)) {
-
+            Vector2 mousePos = input.GetMousePosition();
             if (points.empty()) {
                 points.push_back(input.GetMousePosition());
 
