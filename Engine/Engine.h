@@ -3,6 +3,9 @@
 #include "Vector2.h"
 #include "Random.h"
 #include "EnginMath.h"
+#include "Transform.h"
+
+#include "Actor.h"
 
 //systems
 #include "Renderer.h"
