@@ -42,14 +42,15 @@ namespace nu
 		float Length() const { return std::sqrt(LengthSqr()); }
 		Vector2 Normalized() const { return (*this)/ Length(); }
 		float Dot(const Vector2& v)const { return (this->x * v.x) + (this->y * v.y);}
+
 		float Angle()const {return std::atan2(this->y, this-> x); }
 		float AngleBetween(const Vector2& v)const { return std::acos(Dot(v));}
 
 		Vector2 Rotate(float radians) {
 			Vector2 v;
-
-			v.x = std::cos(radians);
-			v.y = std::sin(radians);
+			
+			v.x = this->x * std::cos(radians) - this->y * std::sin(radians);
+			v.y = this->y * std::sin(radians) + this->x * std::sin(radians);
 
 			return v;
 		}

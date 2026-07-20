@@ -2,6 +2,7 @@
 #include "Input.h"
 
 #include <SDL3/SDL.h>
+#include "Engine.h"
 
 namespace nu {
 	bool Input::Initialize(){
@@ -17,8 +18,9 @@ namespace nu {
 	}
 
 	void Input::Shutdown() {
-		//
+		
 	}
+
 
 	void Input::Update() {
 		m_prevKeyStates = m_keyStates;
