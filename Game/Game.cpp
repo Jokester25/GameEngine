@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Player.h"
 #include "Enemy.h"
+#include <fmod.hpp>
 
 using namespace nu;
 using namespace std;
