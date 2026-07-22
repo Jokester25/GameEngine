@@ -109,7 +109,7 @@ int main()
     for (int i = 0; i < 20; i++) {
         enemyDesc.name = "enemy." + (i + 1);
         enemyDesc.model = playerModel;
-        enemyDesc.transform = Transform{ Vector2{RandomFloat(320.0f),RandomFloat(200.0f)}, RandomFloat(90.0f), RandomFloat(15.0f) };
+        enemyDesc.transform = Transform{ Vector2{RandomFloat(320.0f),RandomFloat(200.0f)}, 0.0f, 15.0f };
         enemyDesc.velocity = Vector2{ 0.0f, 0.0f };
         enemyDesc.speed = 2000.0f;
         Enemy* enemy = new Enemy{enemyDesc};
