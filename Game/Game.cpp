@@ -13,6 +13,31 @@ int main()
     //INITIALIZATION
     
     engine.Initialize();
+    // create audio system
+    FMOD::System* audio;
+    FMOD::System_Create(&audio);
+
+    void* extradriverdata = nullptr;
+    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
+
+    vector<FMOD::Sound*> sounds;
+
+    FMOD::Sound* sound = nullptr;
+    audio->createSound("whistle.mp3", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("scream.mp3", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("oof.mp3", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("duck-toy.mp3", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("hee-hee.mp3", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+    
 
     Mesh mesh{ { Vector2{-2, -4}, Vector2{-2, 4}, Vector2{5, 0}, Vector2{-2,-4}, Vector2{-4, -2}, Vector2{-4, 2}, Vector2{-2, 4} }, Color{1.0f, 0.8f, 0.4f} };
     Model model{ vector<Mesh>{ mesh} };
@@ -52,6 +77,33 @@ int main()
             }
         }
 
+
+        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_1))
+        {
+            audio->playSound(sounds[0], nullptr, false, nullptr);
+        }
+
+        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_2))
+        {
+            audio->playSound(sounds[1], nullptr, false, nullptr);
+        }
+
+        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_3))
+        {
+            audio->playSound(sounds[2], nullptr, false, nullptr);
+        }
+
+        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_4))
+        {
+            audio->playSound(sounds[3], nullptr, false, nullptr);
+        }
+
+        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_5))
+        {
+            audio->playSound(sounds[4], nullptr, false, nullptr);
+        }
+
+        audio->update();
 
         //engine
         engine.Update();
