@@ -1,10 +1,12 @@
 #include "Engine.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Assets.h"
 #include <fmod.hpp>
 
 using namespace nu;
 using namespace std;
+using namespace Assets;
 
 
 int main()
@@ -12,7 +14,7 @@ int main()
 
     //INITIALIZATION
     
-    engine.Initialize();
+    Engine::Get().Initialize();
 
     // get current working directory
     std::cout << "Directory Operations:\n";
@@ -90,13 +92,11 @@ int main()
     sounds.push_back(sound);
     
 
-    Mesh mesh{ { Vector2{-2, -4}, Vector2{-2, 4}, Vector2{5, 0}, Vector2{-2,-4}, Vector2{-4, -2}, Vector2{-4, 2}, Vector2{-2, 4} }, Color{1.0f, 0.8f, 0.4f} };
-    Model model{ vector<Mesh>{ mesh} };
     
     Scene scene;
     PlayerDesc playerDesc;
     playerDesc.name = "Player";
-    playerDesc.model = model;
+    playerDesc.model = playerModel;
     playerDesc.transform = Transform{ Vector2{640.0f, 512.0f}, 0.0f, 15.0f };
     playerDesc.velocity = Vector2{ 0.0f, 0.0f };
     playerDesc.speed = 2000.0f;
@@ -105,9 +105,15 @@ int main()
     scene.AddActor(player);
 
 
-    
+    EnemyDesc enemyDesc;
     for (int i = 0; i < 20; i++) {
-        Enemy* enemy = new Enemy{ 2000.0f,Transform{Vector2{840.0f, 312.0f}, 90.0f, 15.0f}, model };
+        enemyDesc.name = "enemy." + (i + 1);
+        enemyDesc.model = playerModel;
+        enemyDesc.transform = Transform{ Vector2{RandomFloat(320.0f),RandomFloat(200.0f)}, RandomFloat(90.0f), RandomFloat(15.0f) };
+        enemyDesc.velocity = Vector2{ 0.0f, 0.0f };
+        enemyDesc.speed = 2000.0f;
+        Enemy* enemy = new Enemy{enemyDesc};
+
         scene.AddActor(enemy);
     }
     
@@ -129,27 +135,27 @@ int main()
         }
 
 
-        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_1))
+        if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_1))
         {
             audio->playSound(sounds[0], nullptr, false, nullptr);
         }
 
-        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_2))
+        if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_2))
         {
             audio->playSound(sounds[1], nullptr, false, nullptr);
         }
 
-        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_3))
+        if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_3))
         {
             audio->playSound(sounds[2], nullptr, false, nullptr);
         }
 
-        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_4))
+        if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_4))
         {
             audio->playSound(sounds[3], nullptr, false, nullptr);
         }
 
-        if (engine.GetInput().GetKeyPressed(SDL_SCANCODE_5))
+        if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_5))
         {
             audio->playSound(sounds[4], nullptr, false, nullptr);
         }
@@ -157,39 +163,39 @@ int main()
         audio->update();
 
         //engine
-        engine.Update();
-        float dt = engine.GetTime().GetDeltaTime();
+        Engine::Get().Update();
+        float dt = Engine::Get().GetTime().GetDeltaTime();
         //player.SetRotation(player.GetTransform().rotation + (90.0f * engine.GetTime().GetDeltaTime()));
         
         scene.Update(dt);
 
-        if (engine.GetInput().GetButtonDown(Input::MouseButton::Left)) {
-            Vector2 mousePos = engine.GetInput().GetMousePosition();
+        if (Engine::Get().GetInput().GetButtonDown(Input::MouseButton::Left)) {
+            Vector2 mousePos = Engine::Get().GetInput().GetMousePosition();
             if (points.empty()) {
-                points.push_back(engine.GetInput().GetMousePosition());
+                points.push_back(Engine::Get().GetInput().GetMousePosition());
 
             }
             else {
-                Vector2 v = points.back() - engine.GetInput().GetMousePosition();
+                Vector2 v = points.back() - Engine::Get().GetInput().GetMousePosition();
 
                 if (v.Length() > 10.0f) {
-                    points.push_back(engine.GetInput().GetMousePosition());
+                    points.push_back(Engine::Get().GetInput().GetMousePosition());
                 }
             }
         }
       
         //RENDER
-		engine.GetRenderer().SetColor(0.0f, 0.0f, 0.0f); // Set render draw color to black
-        engine.GetRenderer().Clear();
+        Engine::Get().GetRenderer().SetColor(0.0f, 0.0f, 0.0f); // Set render draw color to black
+        Engine::Get().GetRenderer().Clear();
 
         // character
-        scene.Draw(engine.GetRenderer());
+        scene.Draw(Engine::Get().GetRenderer());
 
-        engine.GetRenderer().Present();
+        Engine::Get().GetRenderer().Present();
     }
 
     //SHUTDOWN
-    engine.Shutdown();
+    Engine::Get().Shutdown();
 
     return 0;
 }

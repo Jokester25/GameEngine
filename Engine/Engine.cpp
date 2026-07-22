@@ -7,7 +7,6 @@
 #include<iostream>
 
 namespace nu {
-	Engine engine;
 
 	bool Engine::Initialize() {
 		m_renderer.Initialize("Game Engine", 1280.0f, 1024.0f);

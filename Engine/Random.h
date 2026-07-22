@@ -8,6 +8,7 @@ namespace nu
 
 		return rand();
 	}
+
 	//<summary>
 	//Get Ramdom Int value [0, max)
 	//</summary>
@@ -17,6 +18,7 @@ namespace nu
 
 		return rand() % max;
 	}
+
 	//<summary>
 	// Get random int value [min, max]
 	// </summary>
@@ -26,6 +28,7 @@ namespace nu
 	inline int RandomInt(int min, int max) {
 		return min + RandomInt((max - min) + 1);
 	}
+
 	//<summary>
 	// Get random float value [0, 1)
 	//</summary>
