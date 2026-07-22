@@ -16,6 +16,7 @@
 #include "Renderer.h"
 #include "Input.h"
 #include "FunTime.h"
+#include "File.h"
 
 #include <iostream>
 #include <vector>
