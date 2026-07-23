@@ -7,5 +7,6 @@ using namespace std;
 namespace Assets 
 {
 	extern Model playerModel;
+	extern Model bulletModel;
 
 }

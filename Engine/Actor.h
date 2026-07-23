@@ -12,7 +12,9 @@ namespace nu {
         std::string name;
         std::string tag;
         Transform transform;
-        Vector2 velocity;
+        Vector2 velocity{ 0,0 };
+        float damping{ 0.0f };
+        float lifespan{ 0.0f };
         Model model;
     };
 
@@ -21,11 +23,13 @@ namespace nu {
     public:
         Actor() = default;
         Actor(const ActorDesc& actorDesc) :
-            m_transform{actorDesc.transform} ,
-            m_velocity{actorDesc.velocity} ,
-            m_model{actorDesc.model} ,
-            m_name{actorDesc.name} ,
-            m_tag{actorDesc.tag} 
+            m_transform{ actorDesc.transform },
+            m_velocity{ actorDesc.velocity },
+            m_model{ actorDesc.model },
+            m_name{ actorDesc.name },
+            m_tag{ actorDesc.tag },
+            m_damping{ actorDesc.damping},
+            m_lifespan{ actorDesc.lifespan}
         {}
 
         Actor(const Transform& transform) : m_transform{ transform } { }
@@ -59,6 +63,9 @@ namespace nu {
 
         Transform m_transform;
         Vector2 m_velocity{ 0, 0 };
+        float m_damping{ 0.0f };
+        float m_lifespan{ 0.0f };
+        bool m_destoryed{ false };
 
         Model m_model;
         Scene* m_scene{ nullptr };

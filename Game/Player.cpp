@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Renderer.h"
 #include "Engine.h"
+#include "Assets.h"
+#include "Bullet.h"
 
 void Player::Update(float dt) {
 
@@ -18,7 +20,18 @@ void Player::Update(float dt) {
     nu::Vector2 velocity = forward.Rotate(m_transform.rotation * nu::DegtoRad) * thrust;
     AddVelocity(velocity * dt); 
 
-    //SetVelocity(GetVelocity() + (force * dt));
+    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) {
+        BulletDesc desc;
+        desc.name = "Bullet";
+        desc.tag = "Bullet";
+        desc.model = Assets::bulletModel;
+        desc.transform = m_transform;
+        desc.speed = 1000.0f;
+        desc.lifespan = 2.0f;
+
+        Bullet* bullet = new Bullet{ desc };
+        m_scene->AddActor(bullet);
+    }
 
     Actor::Update(dt);
 

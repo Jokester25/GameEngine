@@ -100,18 +100,21 @@ int main()
     playerDesc.transform = Transform{ Vector2{640.0f, 512.0f}, 0.0f, 15.0f };
     playerDesc.velocity = Vector2{ 0.0f, 0.0f };
     playerDesc.speed = 2000.0f;
+    playerDesc.damping = 1.5f;
 
     Player* player = new Player{playerDesc};
     scene.AddActor(player);
 
 
-    EnemyDesc enemyDesc;
+    
     for (int i = 0; i < 20; i++) {
-        enemyDesc.name = "enemy." + (i + 1);
+        EnemyDesc enemyDesc;
+        enemyDesc.name = "Enemy";
         enemyDesc.model = playerModel;
-        enemyDesc.transform = Transform{ Vector2{RandomFloat(320.0f),RandomFloat(200.0f)}, 0.0f, 15.0f };
+        enemyDesc.transform = Transform{ Vector2{RandomFloat(320.0f),RandomFloat(200.0f)}, RandomFloat(25.0f,90.0f), RandomFloat(5.0f,15.0f) };
         enemyDesc.velocity = Vector2{ 0.0f, 0.0f };
         enemyDesc.speed = 2000.0f;
+        enemyDesc.damping = 3.0f;
         Enemy* enemy = new Enemy{enemyDesc};
 
         scene.AddActor(enemy);
