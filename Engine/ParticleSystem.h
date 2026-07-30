@@ -1,7 +1,8 @@
 #pragma once
-#include <vector>
 #include "Vector2.h"
 #include "Vector3.h"
+
+#include <vector>
 #include<iostream>
 namespace nu
 {
@@ -10,6 +11,7 @@ namespace nu
 		float lifespan{ 1 };
 
 		Vector2 position{ 0,0 };
+		Vector2 velocity{ 0,0 };
 		Color color{ 0, 0, 0 };
 	};
 

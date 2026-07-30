@@ -11,7 +11,8 @@ namespace nu {
 	bool Engine::Initialize() {
 		m_renderer.Initialize("Game Engine", 1280.0f, 1024.0f);
 		//Add particle system Initialize
-
+		m_particleSystem.Initialize();
+		m_audio.Initialize();
 		m_input.Initialize();
 
 		return true;
@@ -21,11 +22,14 @@ namespace nu {
 		m_input.Shutdown();
 		m_renderer.Shutdown();
 		//Add particle system shutdown
+		m_particleSystem.Shutdown();
+		m_audio.Shutdown();
 	}
 
 	void  Engine::Update() {
-		m_input.Update();
 		m_time.Tick();
+		m_input.Update();
 		//add particle system update with m_time GetDeltaTime
+		m_particleSystem.Update(m_time.GetDeltaTime());
 	};
 }

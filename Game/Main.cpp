@@ -53,8 +53,7 @@ int main()
         // character
         game.Draw(Engine::Get().GetRenderer());
        
-
-        //Engine::Get().GetPS.Draw(); <-- for the particle system
+        Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
         Engine::Get().GetRenderer().Present();
 
     }
