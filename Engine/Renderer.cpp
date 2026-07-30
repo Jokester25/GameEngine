@@ -10,7 +10,7 @@
 
 namespace nu
 {
-    bool Renderer::Initialize(const char* name, int width, int height)
+    bool Renderer::Initialize(const char* name, float width, float height)
     {
         m_width = width;
         m_height = height;
@@ -32,7 +32,15 @@ namespace nu
         }
         SDL_SetRenderVSync(m_renderer, 1);
 
+        if (!SDL_Init(SDL_INIT_VIDEO)) {
+            std::cerr << "SDL_Init_ Error: " << SDL_GetError() << std::endl;
+            return false;
+        }
 
+        if (!TTF_Init()) {
+            std::cerr << "TTF_Init Error: " << SDL_GetError() << std::endl;
+            return false;
+        }
 
         return true;
     }
@@ -41,6 +49,7 @@ namespace nu
     {
         SDL_DestroyRenderer(m_renderer);
         SDL_DestroyWindow(m_window);
+        TTF_Quit();
         SDL_Quit();
 	}
 

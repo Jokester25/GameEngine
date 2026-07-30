@@ -9,8 +9,9 @@
 
 #include "Actor.h"
 #include "Scene.h"
+#include "Game.h"
 
-
+#include "Text.h"
 
 //systems
 #include "Renderer.h"
@@ -44,7 +45,8 @@ namespace nu
 	private:
 		Input m_input;
 		Renderer m_renderer;
-
 		Time m_time;
+
+
 	};
 }

@@ -5,6 +5,9 @@
 #include "Player.h"
 
 void Enemy::Update(float dt) {
+    float thrust = 0.0f;
+
+    float rotate = 0.0f;
 
     Player* player = m_scene-> GetActorByName<Player>("Player");
     if (player) {
@@ -17,9 +20,7 @@ void Enemy::Update(float dt) {
         AddVelocity(forward * m_speed * dt);
     }
 
-    float thrust = 0.0f;
-
-    float rotate = 0.0f;
+    
     
     /*nu::Vector2 forward{ 1,0 };
     nu::Vector2 velocity = forward.Rotate(m_transform.rotation * nu::DegtoRad) * thrust;*/
@@ -29,6 +30,15 @@ void Enemy::Update(float dt) {
 
     Actor::Update(dt);
 
+}
+
+void Enemy::OnCollision(Actor* other)
+{
+    if (other->GetTag() == "PlayerBullet") {
+        SetDestoryed();
+
+        other->SetDestoryed();
+    }
 }
 
 void Enemy::Draw(const nu::Renderer& renderer) const {

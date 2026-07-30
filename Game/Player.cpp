@@ -8,8 +8,8 @@
 void Player::Update(float dt) {
 
     float thrust = 0.0f;
-    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = -m_speed;
-    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = +m_speed;
+    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = +m_speed;
+    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -m_speed;
 
     float rotate = 0.0f;
     if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -180.0f;
@@ -20,14 +20,14 @@ void Player::Update(float dt) {
     nu::Vector2 velocity = forward.Rotate(m_transform.rotation * nu::DegtoRad) * thrust;
     AddVelocity(velocity * dt); 
 
-    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) {
+    if (nu::Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE)) {
         BulletDesc desc;
         desc.name = "Bullet";
-        desc.tag = "Bullet";
-        desc.model = Assets::bulletModel;
+        desc.tag = "PlayerBullet";
+        desc.model = assets::bulletModel;
         desc.transform = m_transform;
         desc.speed = 1000.0f;
-        desc.lifespan = 2.0f;
+        desc.lifespan = 5.0f;
 
         Bullet* bullet = new Bullet{ desc };
         m_scene->AddActor(bullet);

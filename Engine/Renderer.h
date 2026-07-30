@@ -1,13 +1,14 @@
 #pragma once
 
 #include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 namespace nu
 {
 	class Renderer
 	{
 	public :
-		bool Initialize(const char* name, int width, int height);
+		bool Initialize(const char* name, float width, float height);
 		void Shutdown();
 
 		void Clear()const;
@@ -28,6 +29,7 @@ namespace nu
 		
 	private:
 		//m_(insert name) is a naming convention for member variables
+		friend class Text;
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;
 

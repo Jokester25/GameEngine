@@ -4,9 +4,10 @@
 using namespace nu;
 using namespace std;
 
-namespace Assets 
+namespace assets 
 {
 	extern Model playerModel;
 	extern Model bulletModel;
+	extern Model enemyModel;
 
 }

@@ -14,6 +14,9 @@ namespace nu
 			actor->Update(dt);
 		}
 
+		//update colisions
+		UpdateCollisions();
+
 		//remove destroyed actors
 		std::erase_if(m_actors, [](auto actor) {return actor->m_destoryed; } );
 
@@ -25,6 +28,24 @@ namespace nu
 	void Scene::Draw(const class Renderer& renderer) {
 		for (auto actor : m_actors) {
 			actor->Draw(renderer);
+		}
+	}
+
+	void Scene::UpdateCollisions() {
+
+		for (auto& actorA : m_actors) {
+			for (auto& actorB : m_actors) {
+				if (actorA == actorB || actorA->m_destoryed || actorB->m_destoryed) continue;
+
+				//checks colliions
+				float distance = (actorA->m_transform.position - actorB->m_transform.position).Length();
+
+				if (distance <= actorA->GetRadius() + actorB->GetRadius()) {
+					actorA->OnCollision(actorB);
+					actorB->OnCollision(actorA);
+				}
+
+			}
 		}
 	}
 

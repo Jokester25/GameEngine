@@ -20,6 +20,7 @@ namespace nu
 		T* GetActorByName(const std::string& name);
 
 	private:
+		void UpdateCollisions();
 		vector<Actor*> m_actors;
 		vector<Actor*> m_pendingActors;
 		

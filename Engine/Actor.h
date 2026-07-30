@@ -40,6 +40,8 @@ namespace nu {
 
         virtual void Update(float dt);
         virtual void Draw(const class Renderer& renderer) const;
+        
+        virtual void OnCollision(Actor* other) {};
 
         const Transform& GetTransform() const { return m_transform; }
         void SetPosition(const Vector2& position) { m_transform.position = position; }
@@ -55,6 +57,10 @@ namespace nu {
 
         Scene* GetScene() { return m_scene; }
         
+        float GetRadius() const;
+
+        void SetDestoryed(bool destory = true) { m_destoryed = destory; };
+        bool GetDestoryed() const { return m_destoryed; }
         friend Scene;
 
     protected:

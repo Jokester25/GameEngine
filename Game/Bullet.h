@@ -2,7 +2,6 @@
 #include "Actor.h"
 
 struct BulletDesc : public nu::ActorDesc {
-
     float speed;
 };
 
