@@ -10,4 +10,8 @@ namespace assets
 	extern Model bulletModel;
 	extern Model enemyModel;
 
+	extern Model medPackModel;
+	extern Model astroidModel;
+	extern Model shieldModel;
+
 }

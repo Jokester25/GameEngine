@@ -23,6 +23,8 @@ public:
     {
     }
 
+    void OnCollision(Actor* other) override;
+
     void Update(float dt) override;
     void Draw(const class nu::Renderer& renderer) const override;
 

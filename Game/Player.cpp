@@ -4,39 +4,33 @@
 #include "Engine.h"
 #include "Assets.h"
 #include "Bullet.h"
+#include "SpaceGame.h"
 
 void Player::Update(float dt) {
+    float thrust = 0.0f;
+    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = +m_speed;
+    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -m_speed;
 
-    // Move on the 2D plane without changing the ship's rotation.
-    // Use WASD as world-space directions (W = up, S = down, A = left, D = right).
-    nu::Vector2 dir{ 0.0f, 0.0f };
-    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) dir.y -= 1.0f;
-    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_S)) dir.y += 1.0f;
+    float rotate = 0.0f;
+    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -180.0f;
+    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +180.0f;
 
-    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) dir.x -= 1.0f;
-    if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) dir.x += 1.0f;
-
-    nu::Vector2 velocity{ 0.0f, 0.0f };
-    if (dir.x != 0.0f || dir.y != 0.0f) {
-        float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-        if (len > 0.0f) {
-            dir.x /= len;
-            dir.y /= len;
-            velocity = dir * m_speed;
-        }
-    }
+    SetRotation(m_transform.rotation + rotate * dt);
+    nu::Vector2 forward{ 1,0 };
+    nu::Vector2 velocity = forward.Rotate(m_transform.rotation * nu::DegtoRad) * thrust;
     AddVelocity(velocity * dt);
 
     //particle system
     nu::Particle particle;
 
-    nu::Vector2 offset{ -1.0f, 0.0f };
+    nu::Vector2 offset{ -20.0f, 0.0f };
     offset = offset.Rotate(m_transform.rotation + nu::DegtoRad);
 
+    nu::Color colors[3] = { {1.0f, 1.0f,1.0f}, {0.9f, 0.2f,1.0f}, {0.9f, 0.8f, 0.0f}, };
     particle.position = m_transform.position + offset;
-    particle.color = { 1.0f, 1.0f, 1.0f };
+    particle.color = colors[nu::RandomInt(3)];
     particle.lifespan = nu::RandomFloat(0.5f, 1.5f);
-    particle.velocity = { nu::RandomFloat(-200.0f, 200.0f), nu::RandomFloat(-200.0f, 200.0f) };
+    particle.velocity = nu::Vector2{-30.0f, 0.0f}.Rotate(m_transform.rotation + nu::DegtoRad);
 
     nu::Engine::Get().GetPS().AddParticle(particle);
 
@@ -59,6 +53,8 @@ void Player::Update(float dt) {
         desc.transform.rotation += 10.0f;
         bullet = new Bullet{ desc };
         m_scene->AddActor(bullet);
+
+        Engine::Get().GetAudio().PlaySound("lazer");
     }
 
     if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_X)) {
@@ -70,6 +66,14 @@ void Player::Update(float dt) {
     Actor::Update(dt);
 
 }
+
+void Player::OnCollision(Actor* other) {
+    if (other->GetName() == "Enemy") {
+        SetDestoryed();
+        ((SpaceGame*)m_scene->GetGame())->OnPlayerDead();
+    }
+}
+
 
 void Player::Draw(const nu::Renderer& renderer) const {
     renderer.DrawModel(m_model, m_transform);
